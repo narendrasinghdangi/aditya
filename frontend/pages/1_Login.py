@@ -33,6 +33,28 @@ st.markdown("""
         padding: 0;
         font-family: Arial, sans-serif;
     }
+    .whatsapp-float {
+        position: fixed;
+        width: 60px;
+        height: 60px;
+        bottom: 20px;
+        right: 20px;
+        background-color: #25D366;
+        color: #FFF;
+        border-radius: 50px;
+        text-align: center;
+        font-size: 30px;
+        box-shadow: 2px 2px 3px #999;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+    }
+    .whatsapp-float:hover {
+        background-color: #1ebe5d;
+        color: #FFF;
+    }
     .login-container {
         display: flex;
         justify-content: center;
@@ -197,13 +219,31 @@ with st.container():
             )
             st.success("Wrong username or password connect to our support teams to resolve this issue")
     
+    support_html = (
+        f'24X7 Support: <a href="https://wa.me/{whatsapp_number}" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>'
+        if whatsapp_number
+        else '24X7 Support: WhatsApp'
+    )
+
+    forgot_password_html = (
+        f'<a href="https://wa.me/{whatsapp_number}" target="_blank">Forgot Password?</a>'
+        if whatsapp_number
+        else '<span>Forgot Password?</span>'
+    )
+
+    register_html = (
+        f'Don\'t have an account? <a href="https://wa.me/{whatsapp_number}" target="_blank">Register here</a>'
+        if whatsapp_number
+        else 'Don\'t have an account? <span>Register here</span>'
+    )
+
     # Add additional login UI elements
-    st.markdown("""
+    st.markdown(f"""
         <div class="forgot-password">
-            <a href="#">Forgot Password?</a>
+            {forgot_password_html}
         </div>
         <div class="register-link">
-            Don't have an account? <a href="#">Register here</a>
+            {register_html}
         </div>
         <div class="recaptcha">
             This site is protected by reCAPTCHA and the Google
@@ -211,8 +251,15 @@ with st.container():
             <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply.
         </div>
         <div class="support">
-            24X7 Support: <a href="https://wa.me/1234567890" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            {support_html}
         </div>
+    """, unsafe_allow_html=True)
+
+if whatsapp_number:
+    st.markdown(f"""
+        <a href="https://wa.me/{whatsapp_number}" target="_blank" class="whatsapp-float">
+            <i class="fab fa-whatsapp"></i>
+        </a>
     """, unsafe_allow_html=True)
 
 # Check if we should redirect after successful login

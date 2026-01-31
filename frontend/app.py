@@ -135,8 +135,33 @@ st.markdown("""
     .sport-tab {
         padding: 5px 15px;
         background-color: #0f3460;
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.15);
         border-radius: 15px;
         white-space: nowrap;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    .sport-tab:hover {
+        background-color: #173f70;
+        border-color: rgba(255, 255, 255, 0.35);
+    }
+    .sidebar-link {
+        display: block;
+        color: rgba(255, 255, 255, 0.92);
+        text-decoration: none;
+        padding: 6px 8px;
+        border-radius: 8px;
+        line-height: 1.2;
+    }
+    .sidebar-link:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: #ffffff;
+    }
+    .sidebar-link.section {
+        font-weight: 700;
+        padding-top: 10px;
+        padding-bottom: 6px;
     }
     .game-grid {
         display: grid;
@@ -256,19 +281,19 @@ col1, col2 = st.columns([1, 4])
 with col1:
     st.sidebar.title("🎮 PLAYZONE9")
         
-    st.sidebar.markdown("### Racing Sports")
-    st.sidebar.markdown("- Horse Racing")
-    st.sidebar.markdown("- Greyhound Racing")
+    st.sidebar.markdown('<a class="sidebar-link section" href="/Login" target="_top">Racing Sports</a>', unsafe_allow_html=True)
+    st.sidebar.markdown('<a class="sidebar-link" href="/Login" target="_top">Horse Racing</a>', unsafe_allow_html=True)
+    st.sidebar.markdown('<a class="sidebar-link" href="/Login" target="_top">Greyhound Racing</a>', unsafe_allow_html=True)
     
-    st.sidebar.markdown("### Others")
-    st.sidebar.markdown("### Our Premium Casino")
-    st.sidebar.markdown("### Our Virtual")
-    st.sidebar.markdown("### Tembo")
-    st.sidebar.markdown("### Live Casino")
-    st.sidebar.markdown("### Slot Game")
-    st.sidebar.markdown("### Fantasy Game")
+    st.sidebar.markdown('<a class="sidebar-link section" href="/Login" target="_top">Others</a>', unsafe_allow_html=True)
+    st.sidebar.markdown('<a class="sidebar-link" href="/Login" target="_top">Our Premium Casino</a>', unsafe_allow_html=True)
+    st.sidebar.markdown('<a class="sidebar-link" href="/Login" target="_top">Our Virtual</a>', unsafe_allow_html=True)
+    st.sidebar.markdown('<a class="sidebar-link" href="/Login" target="_top">Tembo</a>', unsafe_allow_html=True)
+    st.sidebar.markdown('<a class="sidebar-link" href="/Login" target="_top">Live Casino</a>', unsafe_allow_html=True)
+    st.sidebar.markdown('<a class="sidebar-link" href="/Login" target="_top">Slot Game</a>', unsafe_allow_html=True)
+    st.sidebar.markdown('<a class="sidebar-link" href="/Login" target="_top">Fantasy Game</a>', unsafe_allow_html=True)
     
-    st.sidebar.markdown("### All Sports")
+    st.sidebar.markdown('<a class="sidebar-link section" href="/Login" target="_top">All Sports</a>', unsafe_allow_html=True)
     sports = [
         "Politics", "Cricket", "Football", "Tennis", "Table Tennis", "Badminton", 
         "Esoccer", "Basketball", "Volleyball", "Snooker", "Ice Hockey", "FGames", 
@@ -276,7 +301,10 @@ with col1:
         "Beach Volleyball", "Mixed Martial Arts"
     ]
     for sport in sports:
-        st.sidebar.markdown(f"- {sport}")
+        st.sidebar.markdown(
+            f'<a class="sidebar-link" href="/Login" target="_top">{sport}</a>',
+            unsafe_allow_html=True,
+        )
 
 # Main content
 with col2:
@@ -330,6 +358,11 @@ with col2:
         grid-template-columns: repeat(3, 1fr);
         gap: 15px;
         padding: 10px 0;
+    }
+    .game-card-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
     }
     .game-card {
         background: #16213e;
@@ -385,13 +418,15 @@ with col2:
     st.markdown('<div class="game-grid">', unsafe_allow_html=True)
     for game in games:
         st.markdown(f"""
-            <div class="game-card">
-                <div class="game-icon">
-                    <i class="fas {game['icon']}"></i>
+            <a class="game-card-link" href="/Login" target="_top">
+                <div class="game-card">
+                    <div class="game-icon">
+                        <i class="fas {game['icon']}"></i>
+                    </div>
+                    <h4>{game['name']}</h4>
+                    <div class="game-value">{game['value']}</div>
                 </div>
-                <h4>{game['name']}</h4>
-                <div class="game-value">{game['value']}</div>
-            </div>
+            </a>
         """, unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
