@@ -1,0 +1,15 @@
+services:
+  aditya:
+    image: aditya:latest
+    container_name: aditya_container
+    ports:
+      - 8501:8501
+    env_file:
+      - .env
+    networks:
+      - aditya-network
+    restart: always
+
+networks:
+  aditya-network:
+    driver: bridge
