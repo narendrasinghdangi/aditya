@@ -45,18 +45,24 @@ section[data-testid="stMain"] {{
     display: none !important;
 }}
 
-/* ── WHITE CARD — every selector Streamlit might use ── */
+/* ── WHITE CARD — specifically for the form ── */
 .block-container,
 [data-testid="stMainBlockContainer"],
 div.block-container,
 div[data-testid="stMainBlockContainer"] {{
+    background: transparent !important;
+    max-width: 420px !important;
+    margin: 30px auto 80px auto !important;
+    padding-top: 20px !important;
+}}
+
+[data-testid="stForm"] {{
     background-color: #ffffff !important;
     background: #ffffff !important;
     border-radius: 18px !important;
-    max-width: 420px !important;
-    margin: 30px auto 80px auto !important;
     padding: 22px 28px 20px !important;
     box-shadow: 0 20px 60px rgba(0,0,0,0.28) !important;
+    border: none !important;
 }}
 
 /* ALL inner blocks → transparent so card white shows through */
@@ -64,7 +70,6 @@ div[data-testid="stMainBlockContainer"] {{
 [data-testid="stVerticalBlock"] > div,
 [data-testid="stVerticalBlockBorderWrapper"],
 [data-testid="stElementContainer"],
-[data-testid="stForm"],
 [data-testid="stFormSubmitButton"],
 .stMarkdown, .stTextInput, .stButton,
 .element-container {{
@@ -129,46 +134,112 @@ div[data-testid="stMainBlockContainer"] {{
 </style>
 """, unsafe_allow_html=True)
 
-# ── LOGO (HTML, visually part of the card) ────────────────────────────────────
-st.markdown("""
-<div style="text-align:center; margin-bottom:4px;">
-  <div style="
-    width:150px; height:52px;
-    border:3px solid #38bdf8; border-bottom:none;
-    border-radius:100px 100px 0 0;
-    margin:0 auto 4px;
-    box-shadow:0 -2px 10px rgba(56,189,248,.4);
-  "></div>
+# ── LOGO & HEADER ─────────────────────────────────────────────────────────────
+import base64
+import os
+
+def get_image_base64(path):
+    with open(path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
+
+logo_path = os.path.join(os.path.dirname(__file__), "assets", "logo.png")
+logo_base64 = get_image_base64(logo_path)
+
+# Logo OUTSIDE the box
+st.markdown(f"""
+<div style="text-align:center; margin-bottom:20px;">
+  <img src="data:image/png;base64,{logo_base64}" style="width:350px; margin-bottom:10px;">
   <div style="
     font-family:'Inter',sans-serif; font-size:2.4rem; font-weight:900;
-    letter-spacing:3px; color:#0ea5e9; text-transform:uppercase;
-    display:inline-flex; align-items:center; justify-content:center;
+    letter-spacing:1.5px; color:#ffffff; text-transform:uppercase;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
   ">
-    PLAY
-    <span style="
-      display:inline-flex; align-items:center; justify-content:center;
-      width:44px; height:44px; border-radius:50%;
-      background:radial-gradient(circle at 35% 35%, #38bdf8, #0369a1);
-      box-shadow:0 4px 12px rgba(0,0,0,.25); position:relative; top:-2px; margin:0 3px;
-    ">
-      <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
-        <circle cx="14" cy="14" r="13" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
-        <path d="M1.5 14 C6 6, 22 6, 26.5 14" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" fill="none"/>
-        <path d="M1.5 14 C6 22, 22 22, 26.5 14" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" fill="none"/>
-      </svg>
-    </span>
-    NE9
   </div>
 </div>
-<h2 style="text-align:center;color:#0ea5e9;letter-spacing:5px;font-size:1.4rem;
-           font-weight:700;margin:12px 0 14px;">LOGIN 👇</h2>
 """, unsafe_allow_html=True)
 
-# ── NATIVE STREAMLIT FORM (Python can read these directly) ────────────────────
+# ── NATIVE STREAMLIT FORM (The White Card) ────────────────────────────────────
 with st.form("login_form", clear_on_submit=False):
-    username = st.text_input("u", placeholder="👤  Username",  label_visibility="collapsed")
-    password = st.text_input("p", placeholder="🔑  Password",  type="password", label_visibility="collapsed")
+
+    st.markdown("""
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <h2 style="
+        text-align:center;
+        color:#0ea5e9;
+        letter-spacing:5px;
+        font-size:1.4rem;
+        font-weight:700;
+        margin:0 0 14px;
+    ">
+        LOGIN <i class="fa-solid fa-hand-point-down"></i>
+    </h2>
+    """, unsafe_allow_html=True)
+    st.markdown("""
+<style>
+/* Add space for icon */
+div[data-baseweb="input"] input {
+    padding-right: 35px;
+}
+
+/* Username icon */
+div[data-baseweb="input"]:has(input[aria-label="u"])::after {
+    content: "\\f007";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #555;
+}
+
+/* Password icon */
+div[data-baseweb="input"]:has(input[aria-label="p"])::after {
+    content: "\\f084";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #555;
+}
+
+/* Make wrapper relative */
+div[data-baseweb="input"] {
+    position: relative;
+}
+</style>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+""", unsafe_allow_html=True)
+
+    username = st.text_input("u", placeholder="Username",  label_visibility="collapsed")
+    password = st.text_input("p", placeholder="Password", label_visibility="collapsed")
     submitted = st.form_submit_button("Login  ➜", use_container_width=True)
+
+    # ── Links & Legal (Now INSIDE the card) ──
+    st.markdown(f"""
+    <div style="text-align:right;margin-top:6px;">
+      <a href="{WA_LINK}?text=Forgot%20Password" target="_blank"
+         style="color:#0ea5e9;font-size:.9rem;text-decoration:none;">Forgot Password?</a>
+    </div>
+    <div style="text-align:center;margin-top:10px;font-size:.95rem;font-weight:600;color:#1f2937;">
+      Don't have User?&nbsp;
+      <a href="{WA_LINK}?text=Register%20me" target="_blank"
+         style="color:#0ea5e9;font-weight:700;text-decoration:none;">Register here</a>
+    </div>
+    <div style="text-align:center;margin-top:14px;padding-top:12px;border-top:1px solid #f3f4f6;
+                font-size:.72rem;color:#6b7280;line-height:1.55;">
+      This site is protected by reCAPTCHA and the Google
+      <a href="https://policies.google.com/privacy" style="color:#0ea5e9;text-decoration:none;">Privacy Policy</a>
+      and
+      <a href="https://policies.google.com/terms" style="color:#0ea5e9;text-decoration:none;">Terms of Service</a>
+      apply.
+    </div>
+    """, unsafe_allow_html=True)
 
 if submitted:
     if username and password:
@@ -188,27 +259,6 @@ if submitted:
         st.success(f"✅ Welcome **{username}**! Redirecting to WhatsApp…")
     else:
         st.warning("⚠️ Please enter both username and password.")
-
-# ── Links ─────────────────────────────────────────────────────────────────────
-st.markdown(f"""
-<div style="text-align:right;margin-top:6px;">
-  <a href="{WA_LINK}?text=Forgot%20Password" target="_blank"
-     style="color:#0ea5e9;font-size:.9rem;text-decoration:none;">Forgot Password?</a>
-</div>
-<div style="text-align:center;margin-top:10px;font-size:.95rem;font-weight:600;color:#1f2937;">
-  Don't have User?&nbsp;
-  <a href="{WA_LINK}?text=Register%20me" target="_blank"
-     style="color:#0ea5e9;font-weight:700;text-decoration:none;">Register here</a>
-</div>
-<div style="text-align:center;margin-top:14px;padding-top:12px;border-top:1px solid #f3f4f6;
-            font-size:.72rem;color:#6b7280;line-height:1.55;">
-  This site is protected by reCAPTCHA and the Google
-  <a href="https://policies.google.com/privacy" style="color:#0ea5e9;text-decoration:none;">Privacy Policy</a>
-  and
-  <a href="https://policies.google.com/terms" style="color:#0ea5e9;text-decoration:none;">Terms of Service</a>
-  apply.
-</div>
-""", unsafe_allow_html=True)
 
 # ── Footer + Floating WA button ───────────────────────────────────────────────
 st.markdown(f"""
