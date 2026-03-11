@@ -170,7 +170,7 @@ with st.form("login_form", clear_on_submit=False):
         letter-spacing:5px;
         font-size:1.4rem;
         font-weight:700;
-        margin:0 0 14px;
+        margin:0 0 2px;
     ">
         LOGIN <i class="fa-solid fa-hand-point-down"></i>
     </h2>
