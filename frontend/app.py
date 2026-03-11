@@ -20,7 +20,7 @@ st.markdown(f"""
 html, body,
 [data-testid="stApp"],
 [data-testid="stAppViewContainer"] {{
-    background: linear-gradient(160deg, #0ea5e9 0%, #0369a1 55%, #075985 100%) !important;
+    background: linear-gradient(#0088cc, #0077b3) !important;
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
     overflow: hidden;
@@ -52,14 +52,14 @@ div.block-container,
 div[data-testid="stMainBlockContainer"] {{
     background: transparent !important;
     max-width: 420px !important;
-    margin: 30px auto 80px auto !important;
+    margin: 0px auto 80px auto !important;
     padding-top: 20px !important;
 }}
 
 [data-testid="stForm"] {{
     background-color: #ffffff !important;
     background: #ffffff !important;
-    border-radius: 18px !important;
+    border-radius: 0px !important;
     padding: 22px 28px 20px !important;
     box-shadow: 0 20px 60px rgba(0,0,0,0.28) !important;
     border: none !important;
@@ -81,7 +81,7 @@ div[data-testid="stMainBlockContainer"] {{
 [data-testid="stTextInput"] label {{ display: none !important; }}
 [data-testid="stTextInput"] > div > div > input {{
     border: 1.5px solid #d1d5db !important;
-    border-radius: 8px !important;
+    border-radius: 0px !important;
     padding: 12px 16px !important;
     font-size: 1rem !important;
     color: #374151 !important;
@@ -89,17 +89,17 @@ div[data-testid="stMainBlockContainer"] {{
     font-family: 'Inter', sans-serif !important;
 }}
 [data-testid="stTextInput"] > div > div > input:focus {{
-    border-color: #0ea5e9 !important;
+    border-color: #0088cc !important;
     box-shadow: 0 0 0 2px rgba(14,165,233,.15) !important;
 }}
 
 /* ── Login button ── */
 [data-testid="stFormSubmitButton"] > button,
 [data-testid="stButton"] > button {{
-    background: #0ea5e9 !important;
+    background: #0088cc !important;
     color: #fff !important;
     border: none !important;
-    border-radius: 8px !important;
+    border-radius: 0px !important;
     font-size: 1.05rem !important;
     font-weight: 700 !important;
     padding: 13px !important;
@@ -111,11 +111,11 @@ div[data-testid="stMainBlockContainer"] {{
 }}
 [data-testid="stFormSubmitButton"] > button:hover,
 [data-testid="stButton"] > button:hover {{
-    background: #0284c7 !important;
+    background: #0077b3 !important;
 }}
 
-/* Remove extra gap */
-[data-testid="stVerticalBlock"] {{ gap: 0.3rem !important; }}
+/* Remove extra gap - increased from 0.3rem to 0.6rem for more general breathing room */
+[data-testid="stVerticalBlock"] {{ gap: 0.6rem !important; }}
 
 /* ── Floating WhatsApp button ── */
 .wa-fab {{
@@ -148,7 +148,7 @@ logo_base64 = get_image_base64(logo_path)
 # Logo OUTSIDE the box
 st.markdown(f"""
 <div style="text-align:center; margin-bottom:20px;">
-  <img src="data:image/png;base64,{logo_base64}" style="width:350px; margin-bottom:10px;">
+  <img src="data:image/png;base64,{logo_base64}" style="width:400px; margin-bottom:10px;">
   <div style="
     font-family:'Inter',sans-serif; font-size:2.4rem; font-weight:900;
     letter-spacing:1.5px; color:#ffffff; text-transform:uppercase;
@@ -166,7 +166,7 @@ with st.form("login_form", clear_on_submit=False):
 
     <h2 style="
         text-align:center;
-        color:#0ea5e9;
+        color:#0088cc;
         letter-spacing:5px;
         font-size:1.4rem;
         font-weight:700;
@@ -217,26 +217,30 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 """, unsafe_allow_html=True)
 
     username = st.text_input("u", placeholder="Username",  label_visibility="collapsed")
+    # Extra space between username and password
+    st.markdown('<div style="margin-bottom: 25px;"></div>', unsafe_allow_html=True)
     password = st.text_input("p", placeholder="Password", label_visibility="collapsed")
+    # Extra space between password and login button
+    st.markdown('<div style="margin-bottom: 20px;"></div>', unsafe_allow_html=True)
     submitted = st.form_submit_button("Login  ➜", use_container_width=True)
 
     # ── Links & Legal (Now INSIDE the card) ──
     st.markdown(f"""
     <div style="text-align:right;margin-top:6px;">
       <a href="{WA_LINK}?text=Forgot%20Password" target="_blank"
-         style="color:#0ea5e9;font-size:.9rem;text-decoration:none;">Forgot Password?</a>
+         style="color:#0088cc;font-size:.9rem;text-decoration:none;">Forgot Password?</a>
     </div>
     <div style="text-align:center;margin-top:10px;font-size:.95rem;font-weight:600;color:#1f2937;">
       Don't have User?&nbsp;
       <a href="{WA_LINK}?text=Register%20me" target="_blank"
-         style="color:#0ea5e9;font-weight:700;text-decoration:none;">Register here</a>
+         style="color:#0088cc;font-weight:700;text-decoration:none;">Register here</a>
     </div>
     <div style="text-align:center;margin-top:14px;padding-top:12px;border-top:1px solid #f3f4f6;
                 font-size:.72rem;color:#6b7280;line-height:1.55;">
       This site is protected by reCAPTCHA and the Google
-      <a href="https://policies.google.com/privacy" style="color:#0ea5e9;text-decoration:none;">Privacy Policy</a>
+      <a href="https://policies.google.com/privacy" style="color:#0088cc;text-decoration:none;">Privacy Policy</a>
       and
-      <a href="https://policies.google.com/terms" style="color:#0ea5e9;text-decoration:none;">Terms of Service</a>
+      <a href="https://policies.google.com/terms" style="color:#0088cc;text-decoration:none;">Terms of Service</a>
       apply.
     </div>
     """, unsafe_allow_html=True)
@@ -264,7 +268,7 @@ if submitted:
 st.markdown(f"""
 <div style="
   position:fixed; bottom:0; left:0; width:100%;
-  background:#0369a1; text-align:center; padding:12px 20px 16px;
+  background:#0077b3; text-align:center; padding:12px 20px 16px;
   box-shadow:0 -4px 20px rgba(0,0,0,.2);
 ">
   <div style="font-size:1.4rem;font-weight:800;color:#fff;letter-spacing:1px;">24X7 Support</div>
